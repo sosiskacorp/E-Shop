@@ -20,6 +20,7 @@ namespace E_Shop.Data
 
         public DbSet<OrderStatus> OrderStatuses { get; set; }
 
+        public DbSet<Stock> Stocks { get; set; }
 
     }
 }

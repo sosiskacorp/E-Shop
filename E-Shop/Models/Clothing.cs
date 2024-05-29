@@ -29,8 +29,13 @@ namespace E_Shop.Models
             public List<OrderDetail> OrderDetail { get; set; }
             public List<CartDetail> CartDetail { get; set; }
 
+            public Stock Stock { get; set; }
+
             [NotMapped]
             public string CategoryName { get; set; }
+
+            [NotMapped]
+            public int Quantity { get; set; }
         }
     }
 

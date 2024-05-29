@@ -5,16 +5,16 @@
 
 <div class="my-2">
     <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
-  <div class="col-12">
+<div class="col-12">
     <label class="visually-hidden" for="categoryId">Categories</label>
     <select class="form-select" id="categoryId" name="categoryId">
-      <option selected>Category</option>
-      @foreach(var categories in Model.Categories)
-      {
+    <option selected>Category</option>
+    @foreach(var categories in Model.Categories)
+    {
         <option selected="@(categories.Id == Model.CategoryId)" value="@categories.Id">@categories.Name</option>
-      }
+    }
     </select>
-  </div>
+</div>
 
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormInputGroupUsername">Search by title</label>
@@ -24,12 +24,12 @@
             </div>
         </div>
 
-  
 
-  <div class="col-12">
+
+<div class="col-12">
     <button type="submit" class="btn btn-primary">Search</button>
     <a href="/Home/Index" type="reset" class="btn btn-dark">Reset</a>
-  </div>
+</div>
 </form>
 </div>
 
@@ -37,13 +37,13 @@
     @foreach (var clothing in Model.Clothings)
     {
         <div class="card mx-3 mb-4" style="width: 11rem;">
-          @if (string.IsNullOrEmpty(clothing.Image))
-          {
-              <img style="width:100%;height:180px;" src="/images/NoImage.png" class="card-img-top" alt="..."> 
-          }
-          else {
-              <img style="width:100%;height:180px;" src="/images/@clothing.Image" class="card-img-top" alt="..."> 
-          }
+        @if (string.IsNullOrEmpty(clothing.Image))
+        {
+            <img style="width:100%;height:180px;" src="/images/NoImage.png" class="card-img-top" alt="..."> 
+        }
+        else {
+            <img style="width:100%;height:180px;" src="/images/@clothing.Image" class="card-img-top" alt="..."> 
+        }
             
     <div class="card-body">
         <h5 class="card-title">@clothing.Name</h5>
@@ -51,8 +51,13 @@
         <p class="card-text" style="color: gray;">
         @clothing.CategoryName </p>
         <p><b> $ @clothing.Price</b></p>
-        
+        @if(clothing.Quantity>0){
         <button type="button" onclick="add(@clothing.Id)" class="btn btn-primary">Add to cart</button>
+        }
+        else
+        {
+            <span style="border: 1px solid;padding: 5px 8px;color: red;border-radius: 5px;">Out of stock</span>
+        }
     </div>
     </div>
     }

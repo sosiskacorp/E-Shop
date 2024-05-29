@@ -35,7 +35,14 @@
                     <td>$@item.Clothing.Price X @item.Quantity</td>
                     <td>$@(item.Clothing.Price * item.Quantity)</td>
                     <td>
-                        <a class="btn btn-info" href="/Cart/AddItem?clothingId=@item.ClothingId&redirect=1">+</a>
+                        @if (item.Clothing.Stock != null && item.Quantity < item.Clothing.Stock.Quantity)
+                        {
+                            <a class="btn btn-info" href="/Cart/AddItem?clothingId=@item.ClothingId&redirect=1">+</a>
+                        }
+                        else 
+                        {
+                            <span style="border: 1px solid;padding: 8px 8px;color: red;border-radius: 5px; margin-right:4px">Out of stock</span>
+                        }
                         <a class="btn btn-info" href="/cart/RemoveItem?clothingId=@item.ClothingId">-</a>
                     </td>
                 </tr>

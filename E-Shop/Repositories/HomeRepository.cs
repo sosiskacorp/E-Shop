@@ -22,20 +22,25 @@ namespace E_Shop.Repositories
             searchTerm = searchTerm.ToLower();
 
             IEnumerable<Clothing> clothings = await (from clothing in _db.Clothings
-                                                      join category in _db.Categories
-                                                      on clothing.CategoryId equals category.Id
-                                                      where string.IsNullOrWhiteSpace(searchTerm) || (clothing != null && clothing.Name.ToLower().StartsWith(searchTerm))
-                                                      select new Clothing
-                                                      {
-                                                          Id = clothing.Id,
-                                                          Image = clothing.Image,
-                                                          Brand = clothing.Brand,
-                                                          Name = clothing.Name,
-                                                          CategoryId = clothing.CategoryId,
-                                                          Price = clothing.Price,
-                                                          CategoryName = category.Name
-                                                      }
-                                                     ).ToListAsync();
+                                                    join category in _db.Categories
+                                                    on clothing.CategoryId equals category.Id
+                                                    join stock in _db.Stocks
+                                                    on clothing.Id equals stock.ClothingId
+                                                    into clothing_stocks
+                                                    from clothingWithStock in clothing_stocks.DefaultIfEmpty()
+                                                    where string.IsNullOrWhiteSpace(searchTerm) || (clothing != null && clothing.Name.ToLower().StartsWith(searchTerm))
+                                                    select new Clothing
+                                                    {
+                                                        Id = clothing.Id,
+                                                        Image = clothing.Image,
+                                                        Brand = clothing.Brand,
+                                                        Name = clothing.Name,
+                                                        CategoryId = clothing.CategoryId,
+                                                        Price = clothing.Price,
+                                                        CategoryName = category.Name,
+                                                        Quantity=clothingWithStock==null? 0:clothingWithStock.Quantity
+                                                    }
+                                                    ).ToListAsync();
 
             if (categoryId > 0)
             {

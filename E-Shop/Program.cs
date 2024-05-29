@@ -19,6 +19,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IHomeRepository, HomeRepository>();
 builder.Services.AddTransient<ICartRepository, CartRepository>();
+builder.Services.AddTransient<IUserOrderRepository, UserOrderRepository>();
+builder.Services.AddTransient<IStockRepository, StockRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IFileService, FileService>();
+builder.Services.AddTransient<IClothingRepository, ClothingRepository>();
+builder.Services.AddTransient<IReportRepository, ReportRepository>();
 var app = builder.Build();
 //using (var scope = app.Services.CreateScope())
 //{
